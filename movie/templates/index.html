@@ -1,5 +1,17 @@
 {% extends base-temp.html %}
 {% block title %} Movies List {% endblock %}
 {% block body %}
-<div 
+    <div class="container">
+        <div class="row">
+            {% for movie in movies %}
+                <div class="col-sm-4 text-center card">
+                <img src="{{ movie.avatar.url }}" alt="{{ movie.title }}" class="avatar">
+                <a href={% url "movie_detail" movie.id %}>
+                <h4>{{ movie.title }}</h4>
+                </a>
+                <p>{{ movie.get_description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% ednblock %}

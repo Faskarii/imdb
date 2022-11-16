@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=50)),
                 ('description', models.TextField()),
                 ('release_date', models.DateField(blank=True, null=True)),
-                ('avatar', models.ImageField(blank=True, null=True, upload_to='movies/avatar/')),
+                ('avatar', models.ImageField(blank=True, null=True, upload_to='media/avatar/')),
                 ('is_valid', models.BooleanField(default=True)),
                 ('created_time', models.DateTimeField(auto_now=True)),
                 ('modified_time', models.DateTimeField(auto_now=True)),
