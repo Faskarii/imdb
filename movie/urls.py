@@ -1,7 +1,8 @@
 from django.urls import path
-from . import views
+from .views import movies_list
 
 urlpatterns = [
-    path('movies_list/', views.movies_list)
+    path('movies_list/', movies_list, name='movie_list'),
+
 ]
 
