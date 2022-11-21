@@ -3,7 +3,7 @@ from .models import Movie
 
 
 def movies_list(request):
-    limit = int(request.Get.get('limit', 8))
+    limit = int(request.GET.get('limit', 8))
     offset = int(request.GET.get('offset', 0))
     movies = Movie.objects.all()[offset:limit]
     return render(request, 'movies_list.html', context={'movies': movies})
