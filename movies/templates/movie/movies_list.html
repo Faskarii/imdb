@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Movies_list</title>
+    <style>
+        .avatar{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main container">
+        <h2 class="text-center">IMDB</h2>
+        <div class="content">
+            <div class="Row">
+
+                {% for movie in movies %}
+                    <div class="col-sm-4 text-center card">
+                        <img src="{{ movie.avatar.url }}" alt="Movie" class="avatar" >
+                        <a href="{% url 'movie_detail' movie.id  %}">{{ movie }}</a>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
