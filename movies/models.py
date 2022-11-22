@@ -15,11 +15,7 @@ class Movie(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
     release_date = models.DateField(null=True, blank=True)
-<<<<<<< HEAD
     avatar = models.ImageField(upload_to='media/avatar/', null=True, blank=True)
-=======
-    avatar = models.ImageField(upload_to='movie/avatar/', null=True, blank=True)
->>>>>>> 606b57c67d2d46cc0e0eefed91d33501079749a1
     genres = models.ManyToManyField('Genre')
     crew = models.ManyToManyField('Crew', through='MovieCrew')
     is_valid = models.BooleanField(default=True)

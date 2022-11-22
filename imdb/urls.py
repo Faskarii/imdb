@@ -25,9 +25,5 @@ urlpatterns = [
     path('', include('movies.urls'))
 ]
 
-<<<<<<< HEAD
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-=======
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
->>>>>>> 606b57c67d2d46cc0e0eefed91d33501079749a1
