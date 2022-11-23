@@ -17,23 +17,17 @@ def movies_detail(request, pk):
         return render(request, 'movies/movie_detail.html', context=content)
 
 
-def movies_add(request):
+def movies_add(request, movie_form=None):
     if request.method == 'GET':
-        form = MovieForm()
-        return render(request, 'movies/movie_add.html', {'form':form})
+        if not movie_form:
+            movie_form = MovieForm()
+        return render(request, 'movies/movie_add.html', {'form':movie_form})
 
     elif request.method == 'POST':
         form = MovieForm(request.POST)
         if form.is_valid():
-            title = form.cleaned_data.get('title')
-            description = form.cleaned_data.get('description')
-            release_date = form.cleaned_data.get('release_date')
-            avatar = form.cleaned_data.get(avatar)
-            Movie.objects.create(
-                title = title,
-                description = description,
-                release_date = release_date,
-                avatar = avatar
-            )
-            return redirect('movies/movie_list.html')
-        return HttpResponse(str(form.errors))
+            form.save()
+            return redirect('movie_list')
+        
+        request.method = 'GET'
+        return movies_add(request, form)
