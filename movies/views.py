@@ -21,11 +21,17 @@ def movies_list(request):
 
 
 def movies_detail(request, pk):
+    movie = get_object_or_404(Movie, pk=pk)
     if request.method == 'GET':
-        movie = get_object_or_404(Movie, pk=pk, is_valid=True)
-        content = {'movie': movie}
-        return render(request, 'movies/movie_detail.html', context=content)
+        return render(request, 'movies/movie_detail.html')
 
+    elif request.method == 'POST':
+        form = MovieForm(request.POST, request.FILES, instance=movie)
+        if not form.is_valid():
+            return movie_edit(request, pk, movie_form=form)
+
+        form.save()
+        return redirect ('movie_detail', pk=pk) 
 
 def movies_add(request, movie_form=None):
     if not movie_form:
@@ -33,4 +39,23 @@ def movies_add(request, movie_form=None):
     return render(request, 'movies/movie_add.html', {'form':movie_form})
 
 
+def movie_edit(request, pk, movie_form=None):
+    movie = get_object_or_404(Movie, pk=pk)
+
+    if not movie_form:
+        form = MovieForm(instance=movie)
+
+    context = {
+        'form':form,
+        'movie':movie
+    }
+    return render(request, 'movies/movie_edit.html', context=context)
+
+
+
+
+def movie_delete(request, pk):
+    movie = get_object_or_404(Movie, pk)
+    movie.delete()
+    return redirect(movies_list)
         
