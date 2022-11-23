@@ -3,7 +3,7 @@
 {% block body %}
 <div class="main">
     {% comment %} {{ form.non_field_errors }} {% endcomment %}
-    <form action="{% url 'movie_add' %} " method="post">
+    <form action="{% url 'movie_list' %} " method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
         <div class=" form-group text-center">
