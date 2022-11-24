@@ -2,7 +2,11 @@
 {% block title %} login page{% endblock title %}
 {% block body %}
 <div class="container" style="text-align:center; width:30%; height:60%;">
-    <form action="{% url 'login' %}">
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        {% if auth_error %}
+        <h4 style="colr:red;">Authentication failed please try again</h4>
+        {% endif %}
 <!--        <label for="username">Username</label><br>-->
         <input id="username" class="form-control form-control-lg" type="text" name="username" placeholder="Email" ><br>
 <!--        <label for="password">Password</label><br>-->
