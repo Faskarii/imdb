@@ -1,7 +1,7 @@
 {% extends 'base-temp.html' %}
 {% block title %} login page{% endblock title %}
 {% block body %}
-<div class="container" style="text-align:center; width:30%; height:60%;">
+<div class="container p-5" style="text-align:center; width:30%; height:60%;">
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         {% if auth_error %}
