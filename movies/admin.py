@@ -27,7 +27,7 @@ class CrewAdmin(admin.ModelAdmin):
 
 
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ['title', 'description', 'release_date']
+    list_display = ['id', 'title', 'description', 'release_date']
     search_fields = ['title']
     inlines = [MCInline, GenreInline]
     exclude = ('genres',)

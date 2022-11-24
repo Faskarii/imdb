@@ -13,8 +13,17 @@
         </div>
         {% endfor %}
         <div class="text-center">
-        <button type="submit" class=" btn btn-primary">submit</button>
+        <button type="submit" class=" btn btn-primary">Save</button>
         </div>
     </form>    
+
+    <br>
+
+    <form method="post" action={% url 'movie_delete' movie.pk %} >
+        {% csrf_token %}
+        <div class="text-center">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        </div>   
+    </form>
 </div>
 {% endblock %}

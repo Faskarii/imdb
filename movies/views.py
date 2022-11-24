@@ -6,10 +6,10 @@ from .forms import MovieForm
 
 def movies_list(request):
     if request.method == 'GET':
-        movies = Movie.objects.all()
+        movies = Movie.objects.filter(is_valid=True)
         limit = int(request.GET.get('limit', 8))
         offset = int(request.GET.get('offset', 0))
-        return render(request, 'movies/movie_list.html', context={'movies': movies})
+        return render(request, 'movies/movie_list.html', {'movies': movies})
 
     elif request.method == 'POST':
         form = MovieForm(request.POST, request.FILES)
@@ -21,7 +21,7 @@ def movies_list(request):
 
 
 def movies_detail(request, pk):
-    movie = get_object_or_404(Movie, pk=pk)
+    movie = get_object_or_404(Movie, pk=pk, is_valid=True)
     if request.method == 'GET':
         return render(request, 'movies/movie_detail.html')
 
@@ -40,7 +40,7 @@ def movies_add(request, movie_form=None):
 
 
 def movie_edit(request, pk, movie_form=None):
-    movie = get_object_or_404(Movie, pk=pk)
+    movie = get_object_or_404(Movie, pk=pk, is_valid=True)
 
     if not movie_form:
         form = MovieForm(instance=movie)
@@ -55,7 +55,8 @@ def movie_edit(request, pk, movie_form=None):
 
 
 def movie_delete(request, pk):
-    movie = get_object_or_404(Movie, pk)
-    movie.delete()
-    return redirect(movies_list)
+    movie = get_object_or_404(Movie, pk=pk, is_valid=True)
+    movie.is_valid = False
+    movie.save()
+    return redirect('movie_list')
         
