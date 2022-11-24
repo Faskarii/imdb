@@ -5,8 +5,10 @@ from .forms import MovieForm
 
 
 def movies_list(request):
+    limit = int(request.GET.get('limit', 10))
+    offset = int(request.GET.get('offset', 0))
     if request.method == 'GET':
-        movies = Movie.objects.filter(is_valid=True)
+        movies = Movie.objects.filter(is_valid=True)[offset:limit+offset]
         limit = int(request.GET.get('limit', 8))
         offset = int(request.GET.get('offset', 0))
         return render(request, 'movies/movie_list.html', {'movies': movies})
