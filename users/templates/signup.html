@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'base-temp.html' %}
 {% block title %}sign up{% endblock title %}
 {% block body %}
-<div class="container p-5">
+<div class="container p-5", style="text-align:center;">
     <div class="error">{{ form.non_filed_errors }} </div>
     <form method="POST" action="{% url 'sign_up' %}">
         {% csrf_token %}
@@ -12,6 +12,7 @@
             {{ field }}
         </div>
         {% endfor %}
+        <button class="btm btm-primary" type="submit">Register</button>
     </form>
 </div>
 {% endblock body %}
