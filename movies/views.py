@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.shortcuts import render, HttpResponse
-from .models import Movie
+from .models import Movie, MovieCrew
 from .forms import MovieForm
 
 
@@ -25,7 +25,11 @@ def movies_list(request):
 def movies_detail(request, pk):
     movie = get_object_or_404(Movie, pk=pk, is_valid=True)
     if request.method == 'GET':
-        return render(request, 'movies/movie_detail.html')
+        context = {
+            'movie':movie,
+            'movie_crew': MovieCrew.objects.filter(movie=movie)
+        }
+        return render(request, 'movies/movie_detail.html', context=context)
 
     elif request.method == 'POST':
         form = MovieForm(request.POST, request.FILES, instance=movie)
