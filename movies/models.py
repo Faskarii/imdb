@@ -16,8 +16,8 @@ class Movie(models.Model):
     description = models.TextField()
     release_date = models.DateField(null=True, blank=True)
     avatar = models.ImageField(upload_to='media/avatar/', null=True, blank=True)
-    genres = models.ManyToManyField('Genre')
-    crew = models.ManyToManyField('Crew', through='MovieCrew')
+    genres = models.ManyToManyField('Genre', related_name='movies')
+    crew = models.ManyToManyField('Crew', through='MovieCrew', related_name='movies')
     is_valid = models.BooleanField(default=True)
     created_time = models.DateTimeField(auto_now=True)
     modified_time = models.DateTimeField(auto_now=True)
@@ -27,9 +27,9 @@ class Movie(models.Model):
 
 
 class MovieCrew(models.Model):
-    movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
-    crew = models.ForeignKey('Crew', on_delete=models.CASCADE)
-    role = models.ForeignKey('Role', on_delete=models.CASCADE)
+    movie = models.ForeignKey('Movie', on_delete=models.CASCADE, related_name='movie_crew')
+    crew = models.ForeignKey('Crew', on_delete=models.CASCADE, related_name='movie_crew')
+    role = models.ForeignKey('Role', on_delete=models.CASCADE, related_name='movie_crew')
     created_time = models.DateTimeField(auto_now=True)
     modified_time = models.DateTimeField(auto_now=True)
 
