@@ -1,9 +1,11 @@
 from platform import release
 from django import forms
 from django import forms
+from django.core.exceptions import ValidationError
+from .models import Movie
 
-class MovieForm(forms.Form):
-    title = forms.CharField()
-    description = forms.CharField()
-    release_date = forms.DateField()
-    avatar = forms.ImageField(required=False)
+class MovieForm(forms.ModelForm):
+    class Meta:
+        model = Movie
+        fields = ('title', 'description', 'release_date', 'avatar')
+        

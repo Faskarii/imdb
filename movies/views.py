@@ -3,37 +3,60 @@ from django.shortcuts import render, HttpResponse
 from .models import Movie
 from .forms import MovieForm
 
+
 def movies_list(request):
-    limit = int(request.GET.get('limit', 8))
-    offset = int(request.GET.get('offset', 0))
-    movies = Movie.objects.all()
-    return render(request, 'movies/movie_list.html', context={'movies': movies})
+    if request.method == 'GET':
+        movies = Movie.objects.filter(is_valid=True)
+        limit = int(request.GET.get('limit', 8))
+        offset = int(request.GET.get('offset', 0))
+        return render(request, 'movies/movie_list.html', {'movies': movies})
+
+    elif request.method == 'POST':
+        form = MovieForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('movie_list')
+        
+        return movies_add(request, form)
 
 
 def movies_detail(request, pk):
+    movie = get_object_or_404(Movie, pk=pk, is_valid=True)
     if request.method == 'GET':
-        movie = get_object_or_404(Movie, pk=pk, is_valid=True)
-        content = {'movie': movie}
-        return render(request, 'movies/movie_detail.html', context=content)
-
-
-def movies_add(request):
-    if request.method == 'GET':
-        form = MovieForm()
-        return render(request, 'movies/movie_add.html', {'form':form})
+        return render(request, 'movies/movie_detail.html')
 
     elif request.method == 'POST':
-        form = MovieForm(request.POST)
-        if form.is_valid():
-            title = form.cleaned_data.get('title')
-            description = form.cleaned_data.get('description')
-            release_date = form.cleaned_data.get('release_date')
-            avatar = form.cleaned_data.get(avatar)
-            Movie.objects.create(
-                title = title,
-                description = description,
-                release_date = release_date,
-                avatar = avatar
-            )
-            return redirect('movies/movie_list.html')
-        return HttpResponse(str(form.errors))
+        form = MovieForm(request.POST, request.FILES, instance=movie)
+        if not form.is_valid():
+            return movie_edit(request, pk, movie_form=form)
+
+        form.save()
+        return redirect ('movie_detail', pk=pk) 
+
+def movies_add(request, movie_form=None):
+    if not movie_form:
+        movie_form = MovieForm()
+    return render(request, 'movies/movie_add.html', {'form':movie_form})
+
+
+def movie_edit(request, pk, movie_form=None):
+    movie = get_object_or_404(Movie, pk=pk, is_valid=True)
+
+    if not movie_form:
+        form = MovieForm(instance=movie)
+
+    context = {
+        'form':form,
+        'movie':movie
+    }
+    return render(request, 'movies/movie_edit.html', context=context)
+
+
+
+
+def movie_delete(request, pk):
+    movie = get_object_or_404(Movie, pk=pk, is_valid=True)
+    movie.is_valid = False
+    movie.save()
+    return redirect('movie_list')
+        

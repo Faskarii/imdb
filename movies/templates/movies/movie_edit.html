@@ -3,7 +3,7 @@
 {% block body %}
 <div class="main">
     {% comment %} {{ form.non_field_errors }} {% endcomment %}
-    <form action="{% url 'movie_list' %} " method="post" enctype="multipart/form-data">
+    <form action="{% url 'movie_detail' movie.pk%} " method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
         <div class=" form-group text-center">
@@ -13,8 +13,17 @@
         </div>
         {% endfor %}
         <div class="text-center">
-        <button type="submit" class=" btn btn-primary">submit</button>
+        <button type="submit" class=" btn btn-primary">Save</button>
         </div>
     </form>    
+
+    <br>
+
+    <form method="post" action={% url 'movie_delete' movie.pk %} >
+        {% csrf_token %}
+        <div class="text-center">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        </div>   
+    </form>
 </div>
 {% endblock %}

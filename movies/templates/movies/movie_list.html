@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             {% for movie in movies %}
-                <div class="col-sm-4 text-center card">
+                <div class="col-sm-2 text-center card">
                 {% if movie.avatar %}
                 <img src="{{ movie.avatar.url }}" alt="{{ movie.title }}" class="avatar">
                 {% else %}
