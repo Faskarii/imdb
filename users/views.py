@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from .models import User
-from .forms import UserSignUpForm
+from .forms import UserSignUpForm, UserChangPasswordForm, UserResetPasswordForm, UserProfileForm
+from django.contrib import messages
 
 
 def user_login(request):
@@ -16,10 +17,11 @@ def user_login(request):
         print(user)
         if user:
             login(request, user)
-            print()
+            messages.SUCCESS(request, f'Welcome {user}')
             return redirect('/')
 
         else:
+            messages.ERROR(request, f'Authentication fail')
             return render(request, 'login.html', {'auth_error': True})
 
 
@@ -36,3 +38,9 @@ def user_sign_up(request):
         else:
             return render(request, 'signup.html', {'form': form})
 
+
+def user_view(request, pk):
+    if request.method == 'GET':
+        user = request.user
+        form = UserProfileForm(instance=user)
+        return render(request, 'profile.html')
