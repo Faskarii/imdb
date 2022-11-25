@@ -1,0 +1,16 @@
+{% extends 'base-temp.html' %}
+{% block title %}Profile{% endblock title %}
+{% block body %}
+<div class="container p-5" style="width:50%">
+    <div class="card">
+        <img class="card-img-top" src="{{ user.avatar.url }} " alt="No Avatar">
+        <div class="card-body">
+            <div class="card-title">{{user.first_name}} {{ user.last_name }}</div><br>
+            <div class="card-text">user.email</div>
+            <a href="#" class="btn btn-primary">Edite Profile</a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock body %}

@@ -28,7 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_join = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    avatar = models.ImageField(upload_to="users/", blank=True, null=True)
+    avatar = models.ImageField(upload_to="users/", default='users/default-avatar/avatar.jpg')
     is_superuser = models.BooleanField(default=False)
     objects = UserManager()
 

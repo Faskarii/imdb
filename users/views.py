@@ -12,16 +12,14 @@ def user_login(request):
     if request.method == 'POST':
         email = request.POST.get('username')
         password = request.POST.get('password')
-        print(email, password)
         user = authenticate(request, username=email, password=password)
-        print(user)
         if user:
             login(request, user)
-            messages.SUCCESS(request, f'Welcome {user}')
+            messages.success(request, 'Welcome')
             return redirect('/')
 
         else:
-            messages.ERROR(request, f'Authentication fail')
+            messages.ERROR(request, 'Authentication fail')
             return render(request, 'login.html', {'auth_error': True})
 
 
@@ -39,8 +37,8 @@ def user_sign_up(request):
             return render(request, 'signup.html', {'form': form})
 
 
-def user_view(request, pk):
+def user_view(request):
     if request.method == 'GET':
         user = request.user
-        form = UserProfileForm(instance=user)
-        return render(request, 'profile.html')
+        context = {'user': user}
+        return render(request, 'profile.html', context)
