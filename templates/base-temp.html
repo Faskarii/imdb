@@ -1,7 +1,7 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>{% block title %} IMDb {% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,9 +17,9 @@
         <p class="h5 text-dark">Rating, Review, and Where to Watch the Best Movies & TV Shows</p>
     </div>
 </div>
-{% block body %}
- <h1>main body</h1>
-{% endblock %}
+    {% block body %}
+    <h1>main body</h1>
+    {% endblock %}
 </dev>
 </body>
 </html>
