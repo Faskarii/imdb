@@ -3,11 +3,11 @@
 <div class="container">
 <!--    movie-->
 <div>
-    <form action="{% url 'movie_edite' movie.pk %}">
+    <form action="{% url 'movie_edite_view' movie.pk %}">
     {% form.as_div %}
     <button type="submit">Edite</button>
     </form>
-    <form action=" url movie_delete movie.pk " method="POST">
+    <form action=" url movie_delete_view movie.pk " method="POST">
         <button type="submit">Delete</button>
     </form>
 </div>
