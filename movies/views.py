@@ -58,6 +58,17 @@ def movie_edit(request, pk, movie_form=None):
     return render(request, 'movies/movie_edit.html', context=context)
 
 
+def movie_edite_view(request, pk):
+    movie = get_object_or_404(Movie, pk=pk, is_valid=True)
+    if request.method == 'GET':
+        form = MovieForm(instance=movie)
+        context = {'movie': movie, 'form': form}
+        return render(request, 'movie-edite.html', context)
+
+    elif request.method == 'POST':
+        form = MovieForm(request.POST, request.FILES, instance=movie)
+        context = {'movie': movie, 'form': form}
+        return render(request, 'movie-edite.html', context)
 
 
 def movie_delete(request, pk):
@@ -65,4 +76,3 @@ def movie_delete(request, pk):
     movie.is_valid = False
     movie.save()
     return redirect('movie_list')
-        
