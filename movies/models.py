@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.conf import settings
+from comments.models import AbstractComment
 
 class Genre(models.Model):
     title = models.CharField(max_length=20)
@@ -65,3 +66,13 @@ class Role(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class MovieComment(AbstractComment):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+
+class CrewComment(AbstractComment):
+    crew = models.ForeignKey(Crew, on_delete=models.CASCADE)
+
+
